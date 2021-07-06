@@ -1,37 +1,14 @@
 name: Continuous Integration
-on: [push]
+on: [push]                      # Will make the workflow run every time you push to any branch
 
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest      # Sets the build environment a machine with the latest Ubuntu installed
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Setup .NET 5.0 SDK
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v2 # Adds a step to checkout the repository code
       with:
-        dotnet-version: 5.0.x
-
-    - name: Dotnet build
-      run: dotnet build --configuration Release
-
-    - name: Dotnet test
-      run: dotnet test
-
-    - name: Setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
-
-    - name: Typescript install
-      run: npm ci
-      working-directory: ./DotnetTemplate.Web
-
-    - name: Typescript build
-      run: npm run build 
-      working-directory: ./DotnetTemplate.Web
-
-    - name: Typescript test
-      run: npm run test
-      working-directory: ./DotnetTemplate.Web
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: DaveG40/dotnettemplate:latest
