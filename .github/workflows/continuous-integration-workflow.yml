@@ -13,3 +13,16 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: DaveG40/dotnettemplate:latest
+    - uses: actions/checkout@v1
+    - name: Login to Heroku Container registry
+      env:
+        HEROKU_API_KEY: 1d227ec3-10af-4b4b-b80c-859974847f76
+      run: heroku container:login
+    - name: Build and push
+      env:
+        HEROKU_API_KEY: 1d227ec3-10af-4b4b-b80c-859974847f76
+      run: heroku container:push -a module8subals web
+    - name: Release
+      env:
+        HEROKU_API_KEY: 1d227ec3-10af-4b4b-b80c-859974847f76
+      run: heroku container:release -a module8subals web
